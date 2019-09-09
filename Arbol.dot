@@ -1,0 +1,9 @@
+digraph G {
+"q.csv";
+"q.csv"->"Parte2.csv";
+"q.csv"->"s.csv";
+"Parte2.csv";
+"Parte2.csv"->"Parte1.csv";
+"Parte1.csv";
+"s.csv";
+}

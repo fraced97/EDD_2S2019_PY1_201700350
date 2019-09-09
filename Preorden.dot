@@ -1,0 +1,2 @@
+digraph G {
+"q.csv"->"Parte1.csv"->"Parte2.csv"->"s.csv"}
