@@ -23,12 +23,12 @@ Arbol::Arbol()
 
 void Arbol::insertarNodo(NodoArbol *&raiz, string nombre, Matriz3D matriz)
 {
-
+    //contadorArbol++;
     if(raiz==NULL)
     {
         NodoArbol *nuevo = aux.crearNodo(nombre, matriz);
         raiz=nuevo;
-        contadorArbol++;
+        //contadorArbol++;
     }else
     {
         const char *nombreAux = (raiz->nombre).c_str();
@@ -36,12 +36,12 @@ void Arbol::insertarNodo(NodoArbol *&raiz, string nombre, Matriz3D matriz)
         if(strcmp(nombreAux,nombreAux2)>0) //VERIFICO ALFABETICAMENTE
         {
             insertarNodo(raiz->izquierda,nombre,matriz);
-            contadorArbol++;
+            //contadorArbol++;
         }
         else
         {
             insertarNodo(raiz->derecha,nombre,matriz);
-            contadorArbol++;
+            //contadorArbol++;
         }
     }
 }
@@ -61,7 +61,7 @@ void Arbol::mostrarArbol(NodoArbol *arbol2,int contador)
         cout<<arbol2->nombre<<endl;
         mostrarArbol(arbol2->izquierda,contador+1);
     }
-    cout<<contadorArbol<<" ESTE ES EL CONTADOR DEL ARBOL"<<endl;
+    //cout<<contadorArbol<<" ESTE ES EL CONTADOR DEL ARBOL"<<endl;
 }
 void Arbol::graficarArbol(NodoArbol *raiz,ofstream &archivo)
 {
@@ -271,6 +271,62 @@ void Arbol::GraficarPostorden()
     ///////////////////////////////// FIN METODO QUTAR LA ULTIMA FLECHA
     system("dot -Tjpg Postorden.dot -o imagenPostorden.jpg"); // CREANDO EL GRAPHVIZ
     system("imagenPostorden.jpg"); //ABRO LA IMAGEN
+}
+void Arbol::menuArbol(NodoArbol *raiz)
+{
+
+    if(raiz!=NULL)
+    {
+
+        menuArbol(raiz->izquierda);
+        cout<<""<<endl;
+        cout<<"_________"<<raiz->nombre<<"__________"<<endl;
+        menuArbol(raiz->derecha);
+    }
+}
+NodoArbol* Arbol::buscarNodo(std::string nombre,NodoArbol *nodoAux)
+{
+
+    NodoArbol *nodoArbolAux = NULL;
+    if(raiz!=NULL)
+    {
+        //cout<< "asdasdaa"<<nodoAux->nombre;
+        if(nombre==nodoAux->nombre)
+        {
+            //cout << "hola que ace"<<endl;
+
+            return nodoAux;
+            cout<<"ENTRO EN EL PRIMER IF"<<endl;
+        }
+        else
+        {
+            const char *nombreAux = (nodoAux->nombre).c_str();
+            const char *nombreAux2 = nombre.c_str();
+            cout<<"ENTRO EN EL PRIMER ELSE"<<endl;
+           if(nodoAux->derecha !=NULL || nodoAux->izquierda !=NULL)
+           {
+               cout<<"ENTRO EN EL SEGUNDO IF"<<endl;
+               if(strcmp(nombreAux,nombreAux2)>0) //VERIFICO ALFABETICAMENTE
+                {
+                    nodoArbolAux = buscarNodo(nombre, nodoAux->izquierda);
+
+                }
+                else{
+                    nodoArbolAux = buscarNodo(nombre, nodoAux->derecha);
+                }
+               /*if(nombre < nodoAux->nombre)
+               {
+                   nodoArbolAux = buscarNodo(nombre, nodoAux->izquierda);
+
+               }
+               else
+               {
+                   nodoArbolAux = buscarNodo(nombre, nodoAux->derecha);
+               }*/
+           }
+        }
+    }
+    return nodoArbolAux;
 }
 Arbol::~Arbol()
 {

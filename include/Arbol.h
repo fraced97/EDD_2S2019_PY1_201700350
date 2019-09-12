@@ -25,6 +25,8 @@ class Arbol
         void GraficarPostorden();
         void preorden(NodoArbol *raiz,ofstream &archivo);
         void GraficarPreorden();
+        void menuArbol(NodoArbol *raiz);
+        NodoArbol* buscarNodo(std::string nombre,NodoArbol *nodoAux);
         Arbol();
         virtual ~Arbol();
 

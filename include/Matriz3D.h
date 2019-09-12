@@ -17,8 +17,9 @@ class Matriz3D
         NodoMatriz3D* insertarFila(NodoMatriz3D *nuevo, NodoMatriz3D *cabezaFila);
         NodoMatriz3D* crearColumna(int x);
         NodoMatriz3D* crearFila(int y);
-        void generarNuevaMatriz(std::string nombreArchivo);
+        void generarNuevaMatriz(int layer);
         void recorrerMatriz();
+        void imprimirRaiz();
         //Matriz3D();
         virtual ~Matriz3D();
 

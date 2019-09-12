@@ -23,6 +23,10 @@ class MenuPrincipal
         //void archivos(std::string nombreArchivo);
         //void separarColumnas(std::string dato);
         //Matriz3D matriz;
+        void menuSeleccionarImagen();
+        void crearImagen();
+        std::string limpiar_color(std::string color);
+        NodoArbol *auxGuardarNodo; //AGREGADO PARA PROBAR SI FUNCIONA
         virtual ~MenuPrincipal();
 
     protected:

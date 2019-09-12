@@ -15,7 +15,12 @@ class NodoMatriz3D
         int x;
         int y;
         std::string dato;
-        NodoMatriz3D(int x, int y, std::string dato);
+        int nivelCapa;
+        string anchoImagen;
+        string alturaImagen;
+        string anchoPixel;
+        string alturaPixel;
+        NodoMatriz3D(int x, int y, std::string dato,int nivelCapa,string anchoImagen,string alturaImagen,string anchoPixel,string alturaPixel);
 
         //NodoMatriz3D();
         virtual ~NodoMatriz3D();
