@@ -77,15 +77,17 @@ void Arbol::graficarArbol(NodoArbol *raiz,ofstream &archivo)
     if(raiz!=NULL)
     {
         //std::cout<<"\""<<raiz->nombre << "\";"<<endl;
-        archivo<<"\""<<raiz->nombre << "\";"<<endl;
+        archivo<<"\""<<raiz->nombre+", "+raiz->matriz.primeraMatriz->anchoImagen+", "+raiz->matriz.primeraMatriz->alturaImagen+", "+ raiz->matriz.primeraMatriz->anchoPixel+", "+raiz->matriz.primeraMatriz->alturaPixel << "\";"<<endl;
         if(raiz->izquierda!=NULL)
         {
-            archivo<<"\""<<raiz->nombre<<"\"->\""<<raiz->izquierda->nombre<<"\";"<<endl;
+            archivo<<"\""<<raiz->nombre+", "+raiz->matriz.primeraMatriz->anchoImagen+", "+raiz->matriz.primeraMatriz->alturaImagen+", "+ raiz->matriz.primeraMatriz->anchoPixel+", "+raiz->matriz.primeraMatriz->alturaPixel<<"\"->\""<<raiz->izquierda->nombre+", "+raiz->izquierda->matriz.primeraMatriz->anchoImagen+", "+raiz->izquierda->matriz.primeraMatriz->alturaImagen+", "+ raiz->izquierda->matriz.primeraMatriz->anchoPixel
+            +", "+raiz->izquierda->matriz.primeraMatriz->alturaPixel<<"\";"<<endl;
             //cout << "\""<<raiz->nombre<<"\"->\""<<raiz->izquierda->nombre<<"\";"<<endl;
         }
         if(raiz->derecha)
         {
-            archivo<<"\""<<raiz->nombre<<"\"->\""<<raiz->derecha->nombre<<"\";"<<endl;
+            archivo<<"\""<<raiz->nombre+", "+raiz->matriz.primeraMatriz->anchoImagen+", "+raiz->matriz.primeraMatriz->alturaImagen+", "+ raiz->matriz.primeraMatriz->anchoPixel+", "+raiz->matriz.primeraMatriz->alturaPixel<<"\"->\""<<raiz->derecha->nombre+", "+raiz->derecha->matriz.primeraMatriz->anchoImagen+", "+raiz->derecha->matriz.primeraMatriz->alturaImagen+", "+ raiz->derecha->matriz.primeraMatriz->anchoPixel
+            +", "+raiz->derecha->matriz.primeraMatriz->alturaPixel<<"\";"<<endl;
             //std::cout << "\""<<raiz->nombre<<"\"->\""<<raiz->derecha->nombre<<"\";"<<std::endl;
         }
 
@@ -133,7 +135,7 @@ void Arbol::inorden(NodoArbol *raiz,ofstream &archivo)
     if(raiz!=NULL)
     {
         inorden(raiz->izquierda,archivo);
-        archivo<<"\""<<raiz->nombre<<"\"->";
+        archivo<<"\""<<raiz->nombre+", "+raiz->matriz.primeraMatriz->anchoImagen+", "+raiz->matriz.primeraMatriz->alturaImagen+", "+ raiz->matriz.primeraMatriz->anchoPixel+", "+raiz->matriz.primeraMatriz->alturaPixel <<"\"->";
         inorden(raiz->derecha,archivo);
     }
 }
@@ -180,7 +182,7 @@ void Arbol::preorden(NodoArbol *raiz,ofstream &archivo)
 {
     if(raiz!=NULL)
     {
-        archivo<<"\""<<raiz->nombre<<"\"->";
+        archivo<<"\""<<raiz->nombre+", "+raiz->matriz.primeraMatriz->anchoImagen+", "+raiz->matriz.primeraMatriz->alturaImagen+", "+ raiz->matriz.primeraMatriz->anchoPixel+", "+raiz->matriz.primeraMatriz->alturaPixel <<"\"->";
         preorden(raiz->izquierda,archivo);
         preorden(raiz->derecha,archivo);
     }
@@ -230,7 +232,7 @@ void Arbol::postorden(NodoArbol *raiz,ofstream &archivo)
     {
         preorden(raiz->izquierda,archivo);
         preorden(raiz->derecha,archivo);
-        archivo<<"\""<<raiz->nombre<<"\"->";
+        archivo<<"\""<<raiz->nombre+", "+raiz->matriz.primeraMatriz->anchoImagen+", "+raiz->matriz.primeraMatriz->alturaImagen+", "+ raiz->matriz.primeraMatriz->anchoPixel+", "+raiz->matriz.primeraMatriz->alturaPixel <<"\"->";
     }
 
 }

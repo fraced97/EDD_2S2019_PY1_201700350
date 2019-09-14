@@ -20,6 +20,8 @@ class Matriz3D
         void generarNuevaMatriz(int layer);
         void recorrerMatriz();
         void imprimirRaiz();
+        void mostrarCapasCubo(NodoMatriz3D *auxNodo);
+        void pruebaGraficar(NodoMatriz3D *nodoAux, int capa);
         //Matriz3D();
         virtual ~Matriz3D();
 

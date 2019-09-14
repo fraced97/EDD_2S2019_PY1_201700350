@@ -27,6 +27,12 @@ class MenuPrincipal
         void crearImagen();
         std::string limpiar_color(std::string color);
         NodoArbol *auxGuardarNodo; //AGREGADO PARA PROBAR SI FUNCIONA
+        NodoArbol *auxNodoArbol;
+        void menuFiltros();
+        void menuEspejo();
+        void menuReportes();
+        void traversalReporte();
+        void menuSeleccionarCubo();
         virtual ~MenuPrincipal();
 
     protected:

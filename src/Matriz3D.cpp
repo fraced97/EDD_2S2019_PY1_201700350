@@ -2,7 +2,11 @@
 #include <iostream>
 #include <string>
 #include <sstream>
-
+#include <fstream>
+#include <stdlib.h>
+#include <cstring>
+#include <cstdlib>
+using namespace std;
 Matriz3D::Matriz3D()
 {
     this->raiz= new NodoMatriz3D(-1,-1,"Raiz 0",0,"","","","");
@@ -279,7 +283,7 @@ void Matriz3D::imprimirRaiz()
     NodoMatriz3D *temporal;
     temporal = primeraMatriz;
     while(temporal!=NULL){
-        std::cout << temporal->nivelCapa<<temporal->dato<<"RECORRIDO"<< std::endl;
+        std::cout << temporal->nivelCapa<<temporal->dato<<" RECORRIDO"<< std::endl;
         temporal=temporal->frente;
     }
 }
@@ -327,5 +331,241 @@ void Matriz3D::recorrerMatriz()
             break;
         }
     }
+
+}
+void Matriz3D::mostrarCapasCubo(NodoMatriz3D *auxNodo)
+{
+    NodoMatriz3D *aux;
+    aux =auxNodo;
+    std::cout << ""<<std::endl;
+    while(aux!=NULL){
+        if(aux->nivelCapa!=0)
+            {
+                std::cout <<"---  "<<aux->nivelCapa<<" "<<aux->dato<<"  ---"<<std::endl;
+
+            }
+            aux=aux->frente;
+    }
+    std::cout <<"--  "<<"-1 Todo el Cubo"<<"  ---"<<std::endl;
+}
+void Matriz3D::pruebaGraficar(NodoMatriz3D *nodoAux, int capa)
+{
+    NodoMatriz3D *temp;
+    temp =nodoAux;
+    std::cout << ""<<std::endl;
+    while(temp!=NULL){
+        if(temp->nivelCapa==capa)
+            {
+               break;
+
+            }
+            temp=temp->frente;
+    }
+    if(temp==NULL)
+    {
+         std::cout <<"Numero de capa Incorrecto"<<std::endl;
+    }
+    else
+    {
+        if(capa==-1)
+        {
+            std::cout <<"GRAFICAR TODO EL CUBO"<<std::endl;
+        }else
+        {
+            ofstream archivo;
+    archivo.open("CapaMatriz.dot",ios::out);//abriendo el archivo
+    archivo<<"digraph G {"<<endl;
+    archivo<<"node [shape=box, color=cornflowerblue ];"<<endl;
+    NodoMatriz3D *aux;
+    NodoMatriz3D *aux1;
+    //NodoMatriz3D *auxRaiz;
+    aux = temp;
+    //auxRaiz=aux->frente;
+    bool condicion = true;
+    while(condicion){
+        while(aux != NULL){
+            /*if(aux->siguiente!=NULL)
+            {
+               aux = aux->siguiente;
+            }
+            else
+            {
+                break;
+            }
+            if(aux->abajo!=NULL)
+            {
+                aux1 = aux->abajo;
+            }
+            else
+            {
+                break;
+            }*/
+            aux1=aux;
+            while(aux1 != NULL){
+                if(aux1->dato!="x")
+                {
+                    //cout<<"Entro en el primero if"<<endl;
+                    if(aux1->abajo!=NULL)
+                    {
+                        string x;
+                        x=static_cast<std::ostringstream*>(&(std::ostringstream() << aux1->x))->str();
+
+                        string y;
+                        y=static_cast<std::ostringstream*>(&(std::ostringstream() << aux1->y))->str();
+
+                        string ax;
+                        ax=static_cast<std::ostringstream*>(&(std::ostringstream() << aux1->abajo->x))->str();
+                        string ay;
+                        ay=static_cast<std::ostringstream*>(&(std::ostringstream() << aux1->abajo->y))->str();
+
+                        if(aux1->abajo->dato=="x"){
+                                std::ifstream fileIn( "CapaMatriz.dot" );                   // Open for reading
+
+                                std::stringstream buffer;                             // Store contents in a std::string
+                                buffer << fileIn.rdbuf();
+                                std::string contents = buffer.str();
+
+                                fileIn.close();
+                                if(!contents.empty())
+                                {
+                                    contents.resize(contents.size()-4);
+                                }                                    // Remove last character
+
+
+                            NodoMatriz3D *recorrer;
+                                recorrer=aux1->abajo;
+                                while(recorrer!=NULL){
+                                    if(recorrer->dato=="x"){
+                                        recorrer=recorrer->abajo;
+                                    }else{
+                                        break;
+                                    }
+
+                                }
+                                if(recorrer!=NULL){
+                                        string rx;
+                                        rx=static_cast<std::ostringstream*>(&(std::ostringstream() << recorrer->x))->str();
+                                        string ry;
+                                        ry=static_cast<std::ostringstream*>(&(std::ostringstream() << recorrer->y))->str();
+                                    archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->"<<"\""<<recorrer->dato+", ("+rx+","+ry+")"<<"\""<<endl;
+                                }
+
+
+                        }else if (aux1->dato=="Fila"||temp->dato==aux1->dato){
+                            if(aux1->siguiente!=NULL)
+                            {
+                                if(aux1->siguiente->dato=="x")
+                                {
+                                    NodoMatriz3D *recorrer;
+                                    recorrer=aux1->siguiente;
+                                    while(recorrer!=NULL){
+                                    if(recorrer->dato=="x"){
+                                        recorrer=recorrer->siguiente;
+                                    }else{
+                                        break;
+                                    }
+
+                                }
+                                if(recorrer!=NULL){
+
+                                        /*string rx;
+                                        rx=static_cast<std::ostringstream*>(&(std::ostringstream() << aux1->arriba->x))->str();
+                                        string ry;
+                                        ry=static_cast<std::ostringstream*>(&(std::ostringstream() << aux1->arriba->y))->str();*/
+                                        archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->";
+                                }
+                                }
+                                else{
+
+                                    archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->";
+
+                                    //cout<<"entra el inicial"<<endl;
+                                    //archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->"<<"\""<<aux1->abajo->dato+", ("+ax+","+ay+")"<<"\""<<endl;
+                                }
+                            }
+
+                        }else{
+                            if(aux1->siguiente!=NULL)
+                            {
+
+
+                                archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->"<<"\""<<aux1->abajo->dato+", ("+ax+","+ay+")"<<"\""<<endl;
+
+                            }
+
+                        }
+
+                    }
+
+
+                }
+                aux1 = aux1->abajo;
+            }
+        aux = aux->siguiente;
+        //cout<<""<<endl;
+        }
+        //aux=auxRaiz;
+        //if(aux!=NULL){
+            //aux= aux->frente;
+          //  auxRaiz=auxRaiz->frente;
+        //}else
+        //{
+            condicion= false;
+            break;
+        //}
+        }
+        archivo<<"}";                                  // Output contents with removed character
+        //archivo.close();
+    ///////////////////////////////// FIN METODO QUTAR LA ULTIMA FLECHA
+        system("dot -Tjpg CapaMatriz.dot -o imagenCapaMatriz.jpg"); // CREANDO EL GRAPHVIZ
+        system("imagenCapaMatriz.jpg");
+
+
+    /*while(condicion){
+        while(aux != NULL){
+            if(aux->abajo!=NULL)
+            {
+               aux = aux->abajo;
+            }
+            else
+            {
+                break;
+            }
+            if(aux->siguiente!=NULL)
+            {
+                aux1 = aux->siguiente;
+            }
+            else
+            {
+                break;
+            }
+            //aux1=aux;
+            while(aux1 != NULL){
+                if(aux1->dato!="x")
+                {
+                    cout << aux1->dato<<" ";
+
+                }
+                aux1 = aux1->siguiente;
+            }
+       // aux = aux->abajo;
+        cout<<""<<endl;
+        }
+        //aux=auxRaiz;
+        //if(aux!=NULL){
+            //aux= aux->frente;
+          //  auxRaiz=auxRaiz->frente;
+        //}else
+        //{
+            condicion= false;
+            break;
+        //}
+    }*/
+        }
+
+    }
+
+
+
 
 }

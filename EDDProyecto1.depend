@@ -3,25 +3,29 @@
 	<iostream>
 	"MenuPrincipal.h"
 
-1568140834 c:\users\usuario\desktop\codeblocks\eddproyecto1\include\menuprincipal.h
+1568341631 c:\users\usuario\desktop\codeblocks\eddproyecto1\include\menuprincipal.h
 	<iostream>
 	"Matriz3D.h"
 	"NodoArbol.h"
 	"Arbol.h"
 
-1568240228 c:\users\usuario\desktop\codeblocks\eddproyecto1\include\matriz3d.h
+1568341351 c:\users\usuario\desktop\codeblocks\eddproyecto1\include\matriz3d.h
 	"NodoMatriz3D.h"
 
 1568227195 c:\users\usuario\desktop\codeblocks\eddproyecto1\include\nodomatriz3d.h
 	<iostream>
 
-1568240228 source:c:\users\usuario\desktop\codeblocks\eddproyecto1\src\matriz3d.cpp
+1568361928 source:c:\users\usuario\desktop\codeblocks\eddproyecto1\src\matriz3d.cpp
 	"Matriz3D.h"
 	<iostream>
 	<string>
 	<sstream>
+	<fstream>
+	<stdlib.h>
+	<cstring>
+	<cstdlib>
 
-1568252801 source:c:\users\usuario\desktop\codeblocks\eddproyecto1\src\menuprincipal.cpp
+1568410381 source:c:\users\usuario\desktop\codeblocks\eddproyecto1\src\menuprincipal.cpp
 	"MenuPrincipal.h"
 	<iostream>
 	<cstdlib>
@@ -29,11 +33,12 @@
 	<cstring>
 	<string>
 	<sstream>
+	<direct.h>
 
 1568227703 source:c:\users\usuario\desktop\codeblocks\eddproyecto1\src\nodomatriz3d.cpp
 	"NodoMatriz3D.h"
 
-1568252910 source:c:\users\usuario\desktop\codeblocks\eddproyecto1\src\arbol.cpp
+1568262269 source:c:\users\usuario\desktop\codeblocks\eddproyecto1\src\arbol.cpp
 	"Arbol.h"
 	<iostream>
 	<cstdlib>
