@@ -329,18 +329,18 @@ void MenuPrincipal::crearImagen()
         ofstream archivoHtml;
         ofstream archivoCss;
     //////////////////////////////////////CREAR CARPETA
-        std::string auxCarpteNombre = "C://Users//USUARIO//Desktop//CodeBlocks//EDDProyecto1//Exports//"+auxGuardarNodo->nombre;
+        std::string auxCarpteNombre = "Exports//"+auxGuardarNodo->nombre;
         const char *nombreCarpeta = auxCarpteNombre.c_str();
         if(mkdir(nombreCarpeta)==0) cout<<"Carpeta creada correctamente"<<endl;
         else cout<<"La carpeta ya existe"<<endl;
         system("pause>nul");
     //////////////////////////////////////////////////////////////////////CREAR HTML Y CSS
         std::string auxNombreMatriz = auxGuardarNodo->nombre+".html";
-        std::string auxNombreMatriz3 = "C://Users//USUARIO//Desktop//CodeBlocks//EDDProyecto1//Exports//"+auxGuardarNodo->nombre+"//"+auxGuardarNodo->nombre+".html";
+        std::string auxNombreMatriz3 = "Exports//"+auxGuardarNodo->nombre+"//"+auxGuardarNodo->nombre+".html";
         const char *nombreArch = auxNombreMatriz3.c_str();
         archivoHtml.open(nombreArch,ios::out);
         std::string auxNombreMatriz2 = auxGuardarNodo->nombre+".css";
-        std::string auxNombreMatriz4 ="C://Users//USUARIO//Desktop//CodeBlocks//EDDProyecto1//Exports//"+auxGuardarNodo->nombre+"//"+auxGuardarNodo->nombre+".css";
+        std::string auxNombreMatriz4 ="Exports//"+auxGuardarNodo->nombre+"//"+auxGuardarNodo->nombre+".css";
         const char *nombreArch2 = auxNombreMatriz4.c_str();
         archivoCss.open(nombreArch2,ios::out);
     /////////////////////////////////////////////////////////////////////////

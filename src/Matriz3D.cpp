@@ -372,7 +372,7 @@ void Matriz3D::pruebaGraficar(NodoMatriz3D *nodoAux, int capa)
             std::cout <<"GRAFICAR TODO EL CUBO"<<std::endl;
         }else
         {
-            ofstream archivo;
+            ofstream archivo;   /////////Generar Capa por capa
     archivo.open("CapaMatriz.dot",ios::out);//abriendo el archivo
     archivo<<"digraph G {"<<endl;
     archivo<<"node [shape=box, color=cornflowerblue ];"<<endl;
@@ -418,19 +418,7 @@ void Matriz3D::pruebaGraficar(NodoMatriz3D *nodoAux, int capa)
                         string ay;
                         ay=static_cast<std::ostringstream*>(&(std::ostringstream() << aux1->abajo->y))->str();
 
-                        if(aux1->abajo->dato=="x"){
-                                std::ifstream fileIn( "CapaMatriz.dot" );                   // Open for reading
-
-                                std::stringstream buffer;                             // Store contents in a std::string
-                                buffer << fileIn.rdbuf();
-                                std::string contents = buffer.str();
-
-                                fileIn.close();
-                                if(!contents.empty())
-                                {
-                                    contents.resize(contents.size()-4);
-                                }                                    // Remove last character
-
+                        if(aux1->abajo->dato=="x"){//SI EL DATO QUE ESTA ABAJO ES X ESTO ES PARA LAS COLUMNAS
 
                             NodoMatriz3D *recorrer;
                                 recorrer=aux1->abajo;
@@ -447,11 +435,16 @@ void Matriz3D::pruebaGraficar(NodoMatriz3D *nodoAux, int capa)
                                         rx=static_cast<std::ostringstream*>(&(std::ostringstream() << recorrer->x))->str();
                                         string ry;
                                         ry=static_cast<std::ostringstream*>(&(std::ostringstream() << recorrer->y))->str();
-                                    archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->"<<"\""<<recorrer->dato+", ("+rx+","+ry+")"<<"\""<<endl;
+                                        if(recorrer->dato!=""){
+                                            archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->"<<"\""<<recorrer->dato+", ("+rx+","+ry+")"<<"\""<<endl;
+                                            archivo<<"\""<<recorrer->dato+", ("+rx+","+ry+")"<<"\"->"<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\""<<endl;
+                                            //cout<<aux1->dato+" PRIMERO "<<x+"+"<<y+"-"<<recorrer->dato<<rx+"+"<<ry+"-"+"****"<<endl;
+                                        }
+
                                 }
 
 
-                        }else if (aux1->dato=="Fila"||temp->dato==aux1->dato){
+                        }else if (aux1->dato=="Fila"||temp->dato==aux1->dato){//ESTO ES PARA LAS FILAS
                             if(aux1->siguiente!=NULL)
                             {
                                 if(aux1->siguiente->dato=="x")
@@ -460,36 +453,91 @@ void Matriz3D::pruebaGraficar(NodoMatriz3D *nodoAux, int capa)
                                     recorrer=aux1->siguiente;
                                     while(recorrer!=NULL){
                                     if(recorrer->dato=="x"){
-                                        recorrer=recorrer->siguiente;
+                                        recorrer=recorrer->siguiente;//SI ENCUNTRA UN VALOR QUE NO SEA X EN LA FILA LO GUARDA
                                     }else{
                                         break;
                                     }
 
                                 }
-                                if(recorrer!=NULL){
+                                if(recorrer!=NULL){ //BUSCAMOS EL SIGUIENTE VALOR PARA ENLZARLO CON EL ANTERIOR
+                                     if(aux1->abajo!=NULL)
+                                        {
+                                            NodoMatriz3D *aux3;
+                                            aux3=aux1->abajo;
+                                            while(aux3!=NULL){
+                                            if(aux3->siguiente->dato=="x")// SI EL VALOR QUE ESTA ABAJO DEL ANTERIROR EL SIGUIENTE A ESE ES X
+                                            {
+                                                NodoMatriz3D *recorrer2;
+                                                recorrer2=aux3->siguiente;
+                                                while(recorrer2!=NULL)
+                                                {
+                                                    if(recorrer2->dato=="x")
+                                                    {
+                                                        recorrer2=recorrer2->siguiente;//BUSCAMOS UN VALOR HASTA QUE YA NO SEA X
+                                                    }else
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                if(recorrer2!=NULL)
+                                                {
+                                                    string rx;//LO GURDAMOS Y LO ESCRIBIMOS EN EL ARCHIVO
+                                                    rx=static_cast<std::ostringstream*>(&(std::ostringstream() << aux3->x))->str();
+                                                    string ry;
+                                                    ry=static_cast<std::ostringstream*>(&(std::ostringstream() << aux3->y))->str();
 
+                                                    archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->"<<"\""<<aux3->dato+", ("+rx+","+ry+")"<<"\""<<endl;
+                                                    archivo<<"\""<<aux3->dato+", ("+rx+","+ry+")"<<"\"->"<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\""<<endl;
+                                                    //cout<<aux1->dato+" SEGUNDO "<<x+"+"<<y+"-"<<aux3->dato<<rx+"+"<<ry+"-"+"***"<<endl;
+                                                    break;
+                                                }
+                                            }else{// DE LO CONTRARIO SOLO LO VA A ESCRIBIR
+                                                if(aux1->dato!=""){
+                                                    if(aux3->siguiente->dato!=""){
+                                                        string rx7;
+                                                        rx7=static_cast<std::ostringstream*>(&(std::ostringstream() << aux1->abajo->x))->str();
+                                                        string ry7;
+                                                        ry7=static_cast<std::ostringstream*>(&(std::ostringstream() << aux1->abajo->y))->str();
+                                                        archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->"<<"\""<<aux1->abajo->dato+", ("+rx7+","+ry7+")"<<"\""<<endl;
+                                                        archivo<<"\""<<aux1->abajo->dato+", ("+rx7+","+ry7+")"<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\""<<endl;
+                                                        break;
+                                                    }
+                                                }
+                                            }
+                                            aux3=aux3->abajo;
+                                          }
+                                        }
                                         /*string rx;
                                         rx=static_cast<std::ostringstream*>(&(std::ostringstream() << aux1->arriba->x))->str();
                                         string ry;
                                         ry=static_cast<std::ostringstream*>(&(std::ostringstream() << aux1->arriba->y))->str();*/
-                                        archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->";
+                                        //archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->";
                                 }
                                 }
                                 else{
-
+                                    //if(aux1->dato==temp->dato){
                                     archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->";
+                                    //cout<<aux1->dato+" TERCERO "<<"+"+x<<"-"+y+"*"<<endl;
 
                                     //cout<<"entra el inicial"<<endl;
                                     //archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->"<<"\""<<aux1->abajo->dato+", ("+ax+","+ay+")"<<"\""<<endl;
+                                    //}else{
+
+                                    //}
                                 }
                             }
 
-                        }else{
+                        }
+                        else{// PARA ESCRIBIR TODO LO QUE ESTA DENTRO DE LA MATRIZ
                             if(aux1->siguiente!=NULL)
                             {
 
+                                    archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->"<<"\""<<aux1->abajo->dato+", ("+ax+","+ay+")"<<"\""<<endl;
+                                    archivo<<"\""<<aux1->abajo->dato+", ("+ax+","+ay+")"<<"\"->"<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\""<<endl;
+                                    //cout<<aux1->dato+" CUARTO "<<x<<y<<aux1->abajo->dato<<ax<<ay<<endl;
 
-                                archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->"<<"\""<<aux1->abajo->dato+", ("+ax+","+ay+")"<<"\""<<endl;
+
+
 
                             }
 
@@ -504,6 +552,278 @@ void Matriz3D::pruebaGraficar(NodoMatriz3D *nodoAux, int capa)
         aux = aux->siguiente;
         //cout<<""<<endl;
         }
+ /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ aux = temp;
+while(aux != NULL){
+
+            aux1=aux;
+            while(aux1 != NULL){
+                if(aux1->dato!="x")
+                {
+                    //cout<<"Entro en el primero if"<<endl;
+                    if(aux1->siguiente!=NULL)
+                    {
+                        string x;
+                        x=static_cast<std::ostringstream*>(&(std::ostringstream() << aux1->x))->str();
+
+                        string y;
+                        y=static_cast<std::ostringstream*>(&(std::ostringstream() << aux1->y))->str();
+
+                        string ax;
+                        ax=static_cast<std::ostringstream*>(&(std::ostringstream() << aux1->siguiente->x))->str();
+                        string ay;
+                        ay=static_cast<std::ostringstream*>(&(std::ostringstream() << aux1->siguiente->y))->str();
+
+                        if(aux1->siguiente->dato=="x"){ ////SI EL DATO QUE ESTA DESPUES ES UNA X
+
+                            NodoMatriz3D *recorrer;
+                                recorrer=aux1->siguiente;
+                                while(recorrer!=NULL){
+                                    if(recorrer->dato=="x"){
+                                        recorrer=recorrer->siguiente;
+                                    }else{
+                                        break;
+                                    }
+
+                                }
+                                if(recorrer!=NULL){
+                                        string rx;
+                                        rx=static_cast<std::ostringstream*>(&(std::ostringstream() << recorrer->x))->str();
+                                        string ry;
+                                        ry=static_cast<std::ostringstream*>(&(std::ostringstream() << recorrer->y))->str();
+                                        if(recorrer->dato!=""){
+                                                if(aux1->dato!=""){
+                                            archivo<<"rank=same{"<<endl;
+                                            archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->"<<"\""<<recorrer->dato+", ("+rx+","+ry+")"<<"\""<<endl;
+
+                                            archivo<<"}"<<endl;
+                                            /*archivo<<"rank=same{"<<endl;
+                                            archivo<<"\""<<recorrer->dato+", ("+rx+","+ry+")"<<"\"->"<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\""<<endl;
+                                             archivo<<"}"<<endl;*/
+                                            //cout<<aux1->dato+" PRIMERO "<<x+"+"<<y+"-"<<recorrer->dato<<rx+"+"<<ry+"-"+"****"<<endl;
+                                                }
+                                        }
+
+                                }
+
+
+                        }else if (aux1->dato=="Col"||temp->dato==aux1->dato){ ////ESTO ES PARA INGRESAR COLUMNAS Y EL NODO RAIZ
+                            if(aux1->abajo!=NULL)
+                            {
+                                if(aux1->abajo->dato=="x") //SI EL DATO ABAJO DE LA COLUMNA ES UNA X
+                                {
+                                    NodoMatriz3D *recorrer;
+                                    recorrer=aux1->abajo;
+                                    while(recorrer!=NULL){//RECORRO PARA ABAJO HASTA ENCONTRAR UNA X
+                                    if(recorrer->dato=="x"){
+                                        recorrer=recorrer->abajo;
+                                    }else{
+                                        break;
+                                    }
+
+                                }
+                                if(recorrer!=NULL){
+                                     if(aux1->siguiente!=NULL)//AHORA VOY BUSCANDO COLUMNAS PARA ENLAZAR LA ANTERIOR
+                                        {
+                                            NodoMatriz3D *aux3;
+                                            aux3=aux1->siguiente;
+                                            while(aux3!=NULL){//RECORRO TODAS LAS COLUMNAS
+                                            if(aux3->abajo->dato=="x")//SI LO QUE HAY ABAJO ES UNA X
+                                            {
+                                                NodoMatriz3D *recorrer2;
+                                                recorrer2=aux3->abajo;
+                                                while(recorrer2!=NULL) //EN CADA COLUMNA LOS NODOS DE ABAJO HASTA ENCONTRAR NO X
+                                                {
+                                                    if(recorrer2->dato=="x")
+                                                    {
+                                                        recorrer2=recorrer2->abajo;
+                                                    }else
+                                                    {
+                                                        break;
+                                                    }
+                                                }
+                                                if(recorrer2!=NULL)
+                                                {
+                                                    string rx;
+                                                    rx=static_cast<std::ostringstream*>(&(std::ostringstream() << aux3->x))->str();
+                                                    string ry;
+                                                    ry=static_cast<std::ostringstream*>(&(std::ostringstream() << aux3->y))->str();
+                                                    if(aux3->dato!=""){
+                                                      if(aux1->dato!=""){
+                                                    archivo<<"rank=same{"<<endl;
+                                                    archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->"<<"\""<<aux3->dato+", ("+rx+","+ry+")"<<"\""<<endl;
+                                                    //archivo<<"\""<<aux3->dato+", ("+rx+","+ry+")"<<"\"->"<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\""<<endl;
+                                                    archivo<<"}"<<endl;
+                                                    /*archivo<<"rank=same{"<<endl;
+                                                    archivo<<"\""<<aux3->dato+", ("+rx+","+ry+")"<<"\"->"<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\""<<endl;
+                                                    archivo<<"}"<<endl;*/
+                                                    //cout<<aux1->dato+" SEGUNDO "<<x+"+"<<y+"-"<<aux3->dato<<rx+"+"<<ry+"-"+"***"<<endl;
+                                                    break;
+                                                    }
+                                                    }
+                                                }
+                                            }
+                                            else{//SI LO QUE HAY ABAJO NO ES UNA X
+                                                    if(aux1->siguiente->dato!=""){
+                                                        if(aux1->dato!=""){
+                                                archivo<<"rank=same{"<<endl;
+                                                archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->"<<"\""<<aux1->siguiente->dato+", ("+ax+","+ay+")"<<"\""<<endl;
+
+                                                archivo<<"}"<<endl;
+                                                /*archivo<<"rank=same{"<<endl;
+                                                archivo<<"\""<<aux1->siguiente->dato+", ("+ax+","+ay+")"<<"\"->"<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\""<<endl;
+                                                archivo<<"}"<<endl;*/
+                                                break;
+                                                        }
+                                                    }
+                                            }
+                                            aux3=aux3->siguiente;
+                                          }
+                                        }
+
+                                }
+                                }
+                                else{//SI LO QUE ES ABAJO NO ES X
+                                        //if(aux1->dato==temp->dato)
+                                        //{
+                                            if (aux1->siguiente!=NULL){//SI NO HAY X RECORRO LAS COLUMNAS
+                                                NodoMatriz3D *aux4;
+                                                aux4=aux1->siguiente;
+                                                while(aux4!=NULL){
+                                                    if(aux4->abajo!=NULL){
+                                                        if(aux4->abajo->dato=="x"){
+                                                             NodoMatriz3D *recorrer;
+                                                            recorrer=aux4->abajo;
+                                                            while(recorrer!=NULL){//RECORRO TODAS LAS FILAS EN BUSCA DE UNA X
+                                                                if(recorrer->dato=="x"){
+                                                                    recorrer=recorrer->abajo;
+                                                                }else{
+                                                                    break;
+                                                                }
+
+                                                            }
+                                                            if(recorrer!=NULL){//SI ENCUENTRO ALGO QUE NO SEA X
+                                                                if(recorrer->dato!=""){// SI ES DIFERENTE DE VACIO
+                                                                        string rx;
+                                                                        rx=static_cast<std::ostringstream*>(&(std::ostringstream() << recorrer->x))->str();
+                                                                        string ry;
+                                                                        ry=static_cast<std::ostringstream*>(&(std::ostringstream() << recorrer->y))->str();
+                                                                        if(recorrer->dato!=""){
+                                                                        if(aux1->dato==temp->dato)//PARA EL PRIMERO NODO, NODO RAIZ
+                                                                        {
+                                                                            if(recorrer->arriba!=NULL){
+                                                                                NodoMatriz3D *aux6;
+                                                                                aux6=recorrer->arriba;
+                                                                                while(recorrer!=NULL){
+                                                                                    if(aux6->dato=="x"){
+                                                                                        aux6= aux6->arriba;
+                                                                                    }else{
+                                                                                        break;
+                                                                                    }
+                                                                                }
+                                                                                if(aux6!=NULL){//ENLAZA EL PRIMERO NODO CON OTRO NODO QUE TENGA UN VALOR
+                                                                                   string rx4;
+                                                                                    rx4=static_cast<std::ostringstream*>(&(std::ostringstream() << aux6->x))->str();
+                                                                                    string ry4;
+                                                                                    ry4=static_cast<std::ostringstream*>(&(std::ostringstream() << aux6->y))->str();
+                                                                                    if(aux6->dato!=""){
+                                                                                            if(aux1->dato!=""){
+                                                                                    archivo<<"rank=same{"<<endl;
+                                                                                    archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->"<<"\""<<aux6->dato+", ("+rx4+","+ry4+")"<<"\""<<endl;
+
+                                                                                    archivo<<"}"<<endl;
+                                                                                    /*archivo<<"rank=same{"<<endl;
+                                                                                    archivo<<"\""<<aux6->dato+", ("+rx4+","+ry4+")"<<"\"->"<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\""<<endl;
+                                                                                    archivo<<"}"<<endl;*/
+                                                                                    break;
+                                                                                            }
+                                                                                    }
+                                                                                }
+                                                                            }
+
+                                                                        }else{//SI NO ES EL NODO RAIZ
+                                                                            string rx5;
+                                                                            rx5=static_cast<std::ostringstream*>(&(std::ostringstream() << aux4->x))->str();
+                                                                            string ry5;
+                                                                            ry5=static_cast<std::ostringstream*>(&(std::ostringstream() << aux4->y))->str();
+                                                                            if(aux4->dato!=""){
+                                                                                    if(aux1->dato!=""){
+                                                                        archivo<<"rank=same{"<<endl;
+                                                                        archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->"<<"\""<<aux4->dato+", ("+rx5+","+ry5+")"<<"\""<<endl;
+
+                                                                        archivo<<"}"<<endl;
+                                                                        /*archivo<<"rank=same{"<<endl;
+                                                                        archivo<<"\""<<aux4->dato+", ("+rx5+","+ry5+")"<<"\"->"<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\""<<endl;
+                                                                        archivo<<"}"<<endl;*/
+                                                                        break;
+                                                                                    }
+                                                                            }
+                                                                        }
+                                                                        }
+                                                                }
+                                                            }
+                                                        }else{//SI LO QUE HAY ABAJO DE UNA COLUMNA NO ES UNA X
+                                                                        string rx;
+                                                                        rx=static_cast<std::ostringstream*>(&(std::ostringstream() << aux4->x))->str();
+                                                                        string ry;
+                                                                        ry=static_cast<std::ostringstream*>(&(std::ostringstream() <<  aux4->y))->str();
+                                                                        if(aux4->dato!=""){
+                                                                                if(aux1->dato!=""){
+                                                                        archivo<<"rank=same{"<<endl;
+                                                                        archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->"<<"\""<< aux4->dato+", ("+rx+","+ry+")"<<"\""<<endl;
+
+                                                                        archivo<<"}"<<endl;
+                                                                        /*archivo<<"rank=same{"<<endl;
+                                                                        archivo<<"\""<<aux4->dato+", ("+rx+","+ry+")"<<"\"->"<<"\""<< aux1->dato+", ("+x+","+y+")"<<"\""<<endl;
+                                                                        archivo<<"}"<<endl;*/
+                                                                        break;
+                                                                                }
+                                                                        }
+                                                        }
+                                                    }
+
+                                                    aux4=aux4->siguiente;
+                                                }
+                                            }
+
+                                }
+                            }
+
+                        }
+                        else{//INGRESA TODO LO QUE ESTAN EN MEDIO
+                            if(aux1->siguiente!=NULL)
+                            {       if(aux1->dato!=""){
+                                    if(aux1->siguiente->dato!=""){
+                                    archivo<<"rank=same{"<<endl;
+                                    archivo<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\"->"<<"\""<<aux1->siguiente->dato+", ("+ax+","+ay+")"<<"\""<<endl;
+
+
+                                    //cout<<aux1->dato+" CUARTO "<<x<<y<<aux1->abajo->dato<<ax<<ay<<endl;
+                                    archivo<<"}"<<endl;
+                                    /*archivo<<"rank=same{"<<endl;
+                                    archivo<<"\""<<aux1->siguiente->dato+", ("+ax+","+ay+")"<<"\"->"<<"\""<<aux1->dato+", ("+x+","+y+")"<<"\""<<endl;
+                                    archivo<<"}"<<endl;*/
+                                    }
+                            }
+
+
+                            }
+
+                        }
+
+                    }
+
+
+                }
+                aux1 = aux1->siguiente;
+            }
+        aux = aux->abajo;
+        //cout<<""<<endl;
+        }
+
+
+ //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         //aux=auxRaiz;
         //if(aux!=NULL){
             //aux= aux->frente;
@@ -515,7 +835,7 @@ void Matriz3D::pruebaGraficar(NodoMatriz3D *nodoAux, int capa)
         //}
         }
         archivo<<"}";                                  // Output contents with removed character
-        //archivo.close();
+        archivo.close();
     ///////////////////////////////// FIN METODO QUTAR LA ULTIMA FLECHA
         system("dot -Tjpg CapaMatriz.dot -o imagenCapaMatriz.jpg"); // CREANDO EL GRAPHVIZ
         system("imagenCapaMatriz.jpg");
