@@ -21,12 +21,12 @@ Arbol::Arbol()
 
 }*/
 
-void Arbol::insertarNodo(NodoArbol *&raiz, string nombre, Matriz3D matriz)
+void Arbol::insertarNodo(NodoArbol *&raiz, string nombre, Matriz3D matriz,Matriz3D matrizNegativa, Matriz3D matrizBN, Matriz3D matrizEspejo,Matriz3D sinX)
 {
     //contadorArbol++;
     if(raiz==NULL)
     {
-        NodoArbol *nuevo = aux.crearNodo(nombre, matriz);
+        NodoArbol *nuevo = aux.crearNodo(nombre, matriz,matrizNegativa,matrizBN,matrizEspejo,sinX);
         raiz=nuevo;
         //contadorArbol++;
     }else
@@ -35,12 +35,12 @@ void Arbol::insertarNodo(NodoArbol *&raiz, string nombre, Matriz3D matriz)
         const char *nombreAux2 = nombre.c_str();
         if(strcmp(nombreAux,nombreAux2)>0) //VERIFICO ALFABETICAMENTE
         {
-            insertarNodo(raiz->izquierda,nombre,matriz);
+            insertarNodo(raiz->izquierda,nombre,matriz, matrizNegativa, matrizBN, matrizEspejo,sinX);
             //contadorArbol++;
         }
         else
         {
-            insertarNodo(raiz->derecha,nombre,matriz);
+            insertarNodo(raiz->derecha,nombre,matriz, matrizNegativa, matrizBN, matrizEspejo,sinX);
             //contadorArbol++;
         }
     }

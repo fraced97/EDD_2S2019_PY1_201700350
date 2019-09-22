@@ -35,15 +35,19 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="include/Arbol.h" />
+		<Unit filename="include/ListaCircular.h" />
 		<Unit filename="include/Matriz3D.h" />
 		<Unit filename="include/MenuPrincipal.h" />
 		<Unit filename="include/NodoArbol.h" />
+		<Unit filename="include/NodoCircularDE.h" />
 		<Unit filename="include/NodoMatriz3D.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Arbol.cpp" />
+		<Unit filename="src/ListaCircular.cpp" />
 		<Unit filename="src/Matriz3D.cpp" />
 		<Unit filename="src/MenuPrincipal.cpp" />
 		<Unit filename="src/NodoArbol.cpp" />
+		<Unit filename="src/NodoCircularDE.cpp" />
 		<Unit filename="src/NodoMatriz3D.cpp" />
 		<Extensions>
 			<code_completion />

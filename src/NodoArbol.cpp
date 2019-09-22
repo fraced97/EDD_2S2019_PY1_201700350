@@ -44,11 +44,15 @@ NodoArbol::NodoArbol()
     //this->derecha=NULL;
 }
 
-NodoArbol* NodoArbol::crearNodo(string nombre, Matriz3D matriz)
+NodoArbol* NodoArbol::crearNodo(string nombre, Matriz3D matriz, Matriz3D matrizNegativa, Matriz3D matrizBN, Matriz3D matrizEspejo,Matriz3D sinX)
 {
     NodoArbol *nuevo = new NodoArbol();
     nuevo->nombre = nombre;
     nuevo-> matriz = matriz;
+    nuevo->matrizNegativa=matrizNegativa;
+    nuevo->matrizBN= matrizBN;
+    nuevo->matrizEspejo=matrizEspejo;
+    nuevo->sinX=sinX;
     nuevo ->izquierda=NULL;
     nuevo->derecha=NULL;
     return nuevo;

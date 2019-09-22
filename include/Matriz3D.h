@@ -21,7 +21,13 @@ class Matriz3D
         void recorrerMatriz();
         void imprimirRaiz();
         void mostrarCapasCubo(NodoMatriz3D *auxNodo);
-        void pruebaGraficar(NodoMatriz3D *nodoAux, int capa);
+        void mostrarCapasConfigM(NodoMatriz3D *auxNodo);
+        void pruebaGraficar(NodoMatriz3D *nodoAux, int capa,std::string nombre);
+        void graficarFiltro(NodoMatriz3D *nodoAux, int capa,std::string nombre);
+        void edicionManualColor(NodoMatriz3D *nodoAux, int capa, int x, int y, string color);
+        Matriz3D filtroNB(std::string filtro, Matriz3D copiaMatriz);
+        void graficarLineal(NodoMatriz3D *nodoAux,int capa,string columnaFila);
+        void graficarEspejo(NodoMatriz3D *nodoAux, int capa,std::string nombre);
         //Matriz3D();
         virtual ~Matriz3D();
 

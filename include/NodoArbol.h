@@ -12,14 +12,18 @@ class NodoArbol
     public:
         string nombre;
         Matriz3D matriz;
+        Matriz3D matrizNegativa;
+        Matriz3D matrizBN;
+        Matriz3D matrizEspejo;
+        Matriz3D sinX;
         NodoArbol *derecha;
         NodoArbol *izquierda;
         //////////////////////
-        NodoArbol* crearNodo(string nombre, Matriz3D matriz);
+        NodoArbol* crearNodo(string nombre, Matriz3D matriz, Matriz3D matrizNegativa, Matriz3D matrizBN, Matriz3D matrizEspejo,Matriz3D sinX);
         //NodoArbol *arbol;
         //NodoArbol(string nombre, Matriz3D matriz);
         NodoArbol();
-        void insertarNodo(NodoArbol *&arbol,string nombre, Matriz3D matriz);
+        //void insertarNodo(NodoArbol *&arbol,string nombre, Matriz3D matriz, Matriz3D matrizNegativa, Matriz3D matrizBN, Matriz3D matrizEspejo);
         //NodoArbol(string nombre, Matriz3D matriz, NodoArbol *ramaIzq, NodoArbol *ramaDer);
         ///////////////////////////////////////
         NodoArbol* subArbolIzqu();

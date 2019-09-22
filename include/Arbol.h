@@ -15,7 +15,7 @@ class Arbol
         NodoArbol *raiz;
         NodoArbol aux;
         int contadorArbol;
-        void insertarNodo(NodoArbol *&raiz,string nombre, Matriz3D matriz);
+        void insertarNodo(NodoArbol *&raiz,string nombre, Matriz3D matriz, Matriz3D matrizNegativa, Matriz3D matrizBN, Matriz3D matrizEspejo,Matriz3D sinX);
         void mostrarArbol(NodoArbol *arbol, int contador);
         void graficarArbol(NodoArbol *raiz, ofstream &archivo);
         void GraficarArbol();
